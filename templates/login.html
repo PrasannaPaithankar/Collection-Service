@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='loginpage.css')}}">
+</head>
+{% block body %}
+<body>
+<h1>Login</h1>
+<form action="/login" method="POST" id="form">
+  {% if warn=="y" %}
+  <h4 style="background-color: rgb(255, 187, 0); padding: 5px; text-align: center; color: #FFFFFF; border-radius: 5px;">Invalid Credentials</h4>
+  {% endif %}
+  {% if sub=="y" %}
+  <h4 style="background-color: rgb(255, 187, 0); padding: 5px; text-align: center; color: #FFFFFF; border-radius: 5px;">Submitted successfully</h4>
+  {% endif %}
+
+  <input type="text" id="agentID" name="agentID" placeholder="Agent ID" required>
+  <input type="password" id="password" name="password" placeholder="Password">
+  <input type="submit" value="Login">
+ 
+</form>
+</body>
+{% endblock %}
+</html>

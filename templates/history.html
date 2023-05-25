@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dropdown.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='containers.css')}}">
+</head>
+{% block body %}
+
+<body>
+    <div class="header">
+        <div class="menu">
+            <div class="dropdown">
+                <button class="dropbtn">Menu</button>
+                <div class="dropdown-content">
+                    <a href={{url_for('dashboard', agentID=agentID, name=nameAgent)}}>Dashboard</a>
+                    <a href={{url_for('addCustomer', agentID=agentID)}}>Add Customer</a>
+                    <a href={{url_for('login')}}>Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="title">Dashboard</div>
+        <div class="search">
+            <form action={{url_for('search_agent', agentID=agentID)}} method="POST">
+                <input type="text" name="search" id="searchbar" placeholder="Search">
+                <input type="submit" value="Search" id="searchbtn">
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        {% for i in range(0, no) %}
+        <div class="item">
+                <h3>{{ acNo[i] }}</h3>
+                <p>Name: {{ name[i] }}</p>
+                <p>Mobile no.: {{ number[i] }}</p>
+                <p>Collection: {{ collection[i] }}</p>
+                <p>Closing Balance: {{ closingBalance[i] }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+{% endblock %}
+
+</html>

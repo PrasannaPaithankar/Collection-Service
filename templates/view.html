@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dropdown.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='containers.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='loginpage.css')}}">
+    <style>
+        .seperator {
+            display: block;
+            height: 5px;
+            width: 100%;
+            background-color: rgb(72, 72, 72);
+        }
+
+        .new {
+            display: inline-block;
+            width: 15%;
+            margin: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 15%;
+            margin: 10px;
+        }
+        .block {
+            display: inline-block;
+            width: 15%;
+            margin: 10px;
+        }
+        .del {
+            display: inline-block;
+            width: 15%;
+            margin: 10px;
+        }
+
+    </style>
+</head>
+
+{% block body %}
+
+<body>
+    <div class="header">
+        <div class="menu">
+            <div class="dropdown">
+                <button class="dropbtn">Menu</button>
+                <div class="dropdown-content">
+                    <a href={{url_for('admin')}}>Dashboard</a>
+                    <a href={{url_for('admin_action')}}>Action</a>
+                    <a href={{url_for('message')}}>Mail</a>
+                    <a href={{url_for('login')}}>Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="title">Administrator Dashboard</div>
+        <div class="search">
+            <form action="/admin/search" method="POST">
+                <input type="text" name="search" id="searchbar" placeholder="Search">
+                <input type="submit" value="Search" id="searchbtn">
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="item">
+            <h3>{{ agentID }}</h3>
+            <p>Name: {{ name }}</p>
+            <p>email: {{ email }}</p>
+            <p>Mobile no.: {{ number }}</p>
+            <p>Password: {{ password }}</p>
+        </div>
+    </div>
+    <form action={{url_for('chpass', agentID=agentID)}} method="post">
+        <div class="chpass">
+            <div class="new">
+                <input type="password" name="new" id="new" placeholder="New Password">
+            </div>
+            <div class="btn">
+                <input type="submit" value="Change Password">
+            </div>
+        </div>
+    </form>
+    {% if status == 1 %}
+    <form action={{url_for('blockAgent', agentID=agentID)}} method="post">
+        <div class="block">
+            <input type="submit" value="Block Agent">
+        </div>
+    </form>
+    {% else %}
+    <form action={{url_for('blockAgent', agentID=agentID)}} method="post">
+        <div class="block">
+            <input type="submit" value="Unblock Agent">
+        </div>
+    </form>
+    {% endif %}
+    <form action={{url_for('delAgent', agentID=agentID)}} method="post">
+        <div class="del">
+            <input type="submit" value="Delete Agent">
+        </div>
+    </form>
+    <div class="seperator"></div>
+    <div class="container">
+        {% for i in range(0, no) %}
+        <div class="item">
+            <h3>{{ acNo[i] }}</h3>
+            <p>Name: {{ cname[i] }}</p>
+            <p>Mobile no.: {{ cnumber[i] }}</p>
+            <p>Collection: {{ collection[i] }}</p>
+            <p>Closing Balance: {{ closingBalance[i] }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+{% endblock %}
+
+</html>

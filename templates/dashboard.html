@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='loginpage.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='dropdown.css')}}">
+</head>
+{% block body %}
+
+<body>
+  <div class="header">
+    <div class="menu">
+      <div class="dropdown">
+        <button class="dropbtn">Menu</button>
+        <div class="dropdown-content">
+          <a href={{url_for('addCustomer', agentID=agentID)}}>Add Customer</a>
+          <a href={{url_for('history', agentID=agentID)}}>History</a>
+          <a href={{url_for('login')}}>Logout</a>
+        </div>
+      </div>
+    </div>
+    <div class="title">Dashboard</div>
+    <div class="search" id="search">
+      <form action={{url_for('search_agent', agentID=agentID)}} method="POST">
+        <input type="text" name="search" id="searchbar" placeholder="Search">
+        <input type="submit" value="Search" id="searchbtn">
+      </form>
+    </div>
+  </div>
+  <h1 style="text-align: center; color: #3fbed1; margin-top: 70px;margin-bottom: 50px;">Agent: {{ name }}</h1>
+  <form action={{url_for('dashboard', agentID=agentID, name=name)}} method="POST" id="form">
+    <h2>Enter Info</h2>
+    {% if warn=="y" %}
+    <h4
+      style="background-color: rgb(255, 187, 0); padding: 5px; text-align: center; color: #FFFFFF; border-radius: 5px;">
+      Invalid Credentials</h4>
+    {% endif %}
+    {% if success=="y" %}
+    <h4
+        style="background-color: rgb(255, 187, 0); padding: 5px; text-align: center; color: #FFFFFF; border-radius: 5px;">
+        Log Success</h4>
+    {% endif %}
+    <input type="text" id="acNo" name="acNo" placeholder="Account Number" required>
+    <input type="text" id="collection" name="collection" placeholder="Collection" required>
+    <input type="submit" value="Submit">
+
+  </form>
+</body>
+{% endblock %}
+
+</html>

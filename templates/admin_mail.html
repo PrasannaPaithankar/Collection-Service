@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Mail</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='mail.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dropdown.css')}}">
+</head>
+{% block body %}
+
+<body>
+    <div class="header">
+        <div class="menu">
+            <div class="dropdown">
+                <button class="dropbtn">Menu</button>
+                <div class="dropdown-content">
+                    <a href={{url_for('admin')}}>Dashboard</a>
+                    <a href={{url_for('add')}}>Add Agent</a>
+                    <a href={{url_for('admin_action')}}>Action</a>
+                    <a href={{url_for('login')}}>Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="title">Administrator Dashboard</div>
+        <div class="search">
+            <form action="/admin/search" method="POST">
+                <input type="text" name="search" id="searchbar" placeholder="Search">
+                <input type="submit" value="Search" id="searchbtn">
+            </form>
+        </div>
+    </div>
+    <form action="/admin/message">
+        <div class="mail">
+            <div class="to">
+                <h3>Recipients</h3>
+                <input type="text" name="to" id="to" placeholder="To">
+            </div>
+            <div class="message">
+                <h3>Message</h3>
+                <input type="text" name="body" id="body" cols="30" rows="10" placeholder="Body"></textarea>
+            </div>
+            <div class="toall">
+                <h4>All Agents</h4>
+                <input type="checkbox" name="toall" id="toall" value="a">
+            </div>
+            <div class="btn">
+                <input type="submit" value="Send">
+            </div>
+        </div>
+    </form>
+</body>
+{% endblock %}
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dropdown.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='containers.css')}}">
+    <style>
+        .add {
+            display: block;
+            text-align: center;
+            margin: 30px auto;
+        }
+
+        .add a {
+            background-color: rgb(103, 230, 249);
+            text-decoration: none;
+            color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .add a:hover {
+            background-color: #fff;
+            color: rgb(103, 230, 249);
+        }
+        
+    </style>
+</head>
+{% block body %}
+
+<body>
+    <div class="header">
+        <div class="menu">
+            <div class="dropdown">
+                <button class="dropbtn">Menu</button>
+                <div class="dropdown-content">
+                    <a href={{url_for('add')}}>Add Agent</a>
+                    <a href={{url_for('admin_action')}}>Action</a>
+                    <a href={{url_for('message')}}>Mail</a>
+                    <a href={{url_for('login')}}>Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="title">Administrator Dashboard</div>
+        <div class="search">
+            <form action="/admin/search" method="POST">
+                <input type="text" name="search" id="searchbar" placeholder="Search">
+                <input type="submit" value="Search" id="searchbtn">
+            </form>
+        </div>
+    </div>
+    <div class="add">
+        <a href="/add">Add Agent</a>
+    </div>
+    <div class="container">
+        {% for i in range(0, no) %}
+        {% if status[i]==1 %}
+        <div class="item">
+            <h3>{{ agentID[i] }}</h3>
+            <p>Name: {{ name[i] }}</p>
+            <p>Mobile no.: {{ number[i] }}</p>
+            <p>e-mail: {{ email[i] }}</p>
+            <p>Password: {{ password[i] }}</p>
+            <a href={{url_for('view', agentID=agentID[i])}} id="view">View</a>
+        </div>
+        {% else %}
+        <div class="item" style="background-color: #ff7940;">
+            <h3>{{ agentID[i] }}</h3>
+            <p>Name: {{ name[i] }}</p>
+            <p>Mobile no.: {{ number[i] }}</p>
+            <p>e-mail: {{ email[i] }}</p>
+            <p>Password: {{ password[i] }}</p>
+            <a href={{url_for('view', agentID=agentID[i])}} id="view">View</a>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</body>
+{% endblock %}
+
+</html>

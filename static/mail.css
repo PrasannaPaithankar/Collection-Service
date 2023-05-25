@@ -1,0 +1,94 @@
+@media screen and (min-device-width: 800px) {
+.mail {
+    margin: 40px 20px;
+}
+
+.mail h3, h4 {
+    color: #3fbed1;
+    margin-bottom: 7px;
+}
+
+.mail h4 {
+    display: inline;
+}
+
+#toall {
+    margin-bottom: 17px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  width: 25%;
+  margin-bottom: 20px;
+}
+
+input[type="submit"],
+input[type="button"] {
+  background-color: #ffffff;
+  color: #3fbed1;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.2s ease-in-out;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover {
+  background-color: #3fbed1;
+  color: #fff;
+}
+}
+
+@media screen and (max-device-width: 800px) {
+  .mail {
+      margin: 40px 20px;
+  }
+  
+  .mail h3, h4 {
+      color: #3fbed1;
+      margin-bottom: 7px;
+  }
+  
+  .mail h4 {
+      display: inline;
+  }
+  
+  #toall {
+      margin-bottom: 17px;
+  }
+  
+  input[type="text"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: 25%;
+    margin-bottom: 20px;
+  }
+  
+  input[type="submit"],
+  input[type="button"] {
+    background-color: #ffffff;
+    color: #3fbed1;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  input[type="submit"]:hover,
+  input[type="button"]:hover {
+    background-color: #3fbed1;
+    color: #fff;
+  }
+  }
+  
