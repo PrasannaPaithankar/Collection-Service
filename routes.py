@@ -207,8 +207,6 @@ def admin_action():
         return render_template("admin_action.html", success="y")
     return render_template("admin_action.html", success="n")
 
-
-
 # agent history page
 @app.route("/history/<agentID>", methods=['GET', 'POST'])
 def history(agentID):
