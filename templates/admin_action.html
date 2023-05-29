@@ -9,23 +9,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='dropdown.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='containers.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='loginpage.css')}}">
-    <style>
-        .btn {
-            display: block;
-            text-align: center;
-            margin: 20px auto;
-        }
-
-        /* .btn input {
-            background-color: #ffd940;
-            text-decoration: none;
-            color: rgb(0, 0, 0);
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-        } */
-    </style>
 </head>
 {% block body %}
 
@@ -58,7 +41,10 @@
 
     <div class="panel">
         <form action="/admin_action" method="post">
-            <input type="submit" value="Generate">
+            <input type=checkbox name=option value='Export'>Export<br/>
+            <input type=checkbox name=option value='Add Agents'>Add Agents<br/>
+            <input type=checkbox name=option value='Add Customers'>Add Customers<br/>
+            <input type="submit" value="Action">
         </form>
     </div>
 

@@ -28,13 +28,6 @@
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     }
 
-    /* .item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-} */
-
     .item h3 {
         margin: 10px 0;
         font-size: 1.5rem;
@@ -64,6 +57,11 @@
     .item button:hover {
         background-color: #fff;
         color: #333;
+    }
+
+    .panel {
+        margin-left: 20px;
+        margin-top:20px;
     }
 
 }
@@ -136,4 +134,8 @@
         color: #333;
     }
 
+    .panel {
+        margin-left: 20px;
+        margin-top:20px;
+    }
 }

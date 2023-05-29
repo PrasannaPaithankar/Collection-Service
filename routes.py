@@ -3,16 +3,17 @@ from flask import render_template , request, redirect, url_for
 from models import Agent, Customer, db, app, mail
 import shutil
 import datetime
+import pandas as pd
 
 # root page
 @app.route("/")
 def index():
-    agent = Agent(name="test", mobileNo="123", email="test@test", password="test")
-    db.session.add(agent)
-    customer = Customer(name="test", mobileNo="123", collection=123, closingBalance=123, agentID=10001)
-    db.session.add(customer)
-    db.session.commit()
-    with open('report.csv', 'w') as f:
+    # agent = Agent(name="test", mobileNo="123", email="test@test", password="test")
+    # db.session.add(agent)
+    # customer = Customer(name="test", mobileNo="123", collection=123, closingBalance=123, agentID=10001)
+    # db.session.add(customer)
+    # db.session.commit()
+    with open('/var/www/html/collection-service/report.csv', 'w') as f:
         f.write("Name,Account Number,Mobile Number,Collection,Closing Balance,Agent ID\n")
     f.close()
     return redirect(url_for('login'))
@@ -171,15 +172,42 @@ def view(agentID):
 @app.route("/admin_action", methods=['GET', 'POST'])
 def admin_action():
     if request.method=='POST':
-        shutil.copy('report.csv', 'Reports/report-{}.csv'.format(str(datetime.datetime.now())[:10]))
-        with open('report.csv', 'w') as f:
-            f.write("Name,Account Number,Mobile Number,Collection,Closing Balance,Agent ID\n")
-        f.close()
-        for i in Customer.query.all():
-            i.collection = 0
-        db.session.commit()
+        # export
+        if "Export" in request.form.getlist('option'):
+            shutil.copy('/var/www/html/collection-service/report.csv', '/var/www/html/collection-service/Reports/report-{}.csv'.format(str(datetime.datetime.now())[:10]))
+            with open('/var/www/html/collection-service/report.csv', 'w') as f:
+                f.write("Name,Account Number,Mobile Number,Collection,Closing Balance,Agent ID\n")
+            f.close()
+            for i in Customer.query.all():
+                i.collection = 0
+            db.session.commit()
+
+        # import agent
+        if "Add Agents" in request.form.getlist('option'):
+            df = pd.read_excel("~/Downloads/agent.xlsx")
+            for i in range(len(df)):
+                agent = Agent(name=df['Name'][i], email=df['Email'][i], password=df['Password'][i], mobileNo=df['Mobile Number'][i], status=df['Status'][i])
+                db.session.add(agent)
+                db.session.commit()
+                message = "Your account has been created. Your agent ID is " + str(10000+agent.id) + " and password is " + agent.password
+                # send message to agent
+                mail.send_message('User authentication', sender='vrslightmodecoders@gmail.com', recipients=[str(agent.email)], body=message)
+            del df
+
+        # import customer
+        if "Add Customers" in request.form.getlist('option'):
+            df = pd.read_excel("~/Downloads/customer.xlsx")
+            for i in range(1, len(df)):
+                customer = Customer(name=df['Name'][i], mobileNo=df['Mobile Number'][i], agentID=df['Agent ID'][i])
+                db.session.add(customer)
+                db.session.commit()
+                # message = "Your account has been created. Your account number is " + str(10000+customer.id)
+                # send message to customer
+            del df
         return render_template("admin_action.html", success="y")
     return render_template("admin_action.html", success="n")
+
+
 
 # agent history page
 @app.route("/history/<agentID>", methods=['GET', 'POST'])

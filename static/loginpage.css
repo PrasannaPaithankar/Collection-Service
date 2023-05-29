@@ -58,6 +58,10 @@
     margin-bottom: 20px;
   }
 
+  input[type="checkbox"] {
+    margin-bottom: 10px;
+  }
+
   input[type="submit"],
   input[type="button"] {
     background-color: #ffffff;
@@ -139,6 +143,10 @@
     width: 95%;
     margin-bottom: 20px;
     font-size: 40px;
+  }
+
+  input[type="checkbox"] {
+    margin-bottom: 10px;
   }
 
   input[type="submit"],
