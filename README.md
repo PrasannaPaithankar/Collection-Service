@@ -1,2 +1,2 @@
 # Collection-Service
-## bhushan & Associates
+## Bhushan & Associates
