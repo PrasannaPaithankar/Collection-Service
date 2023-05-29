@@ -185,7 +185,7 @@ def admin_action():
         # import agent
         if "Add Agents" in request.form.getlist('option'):
             df = pd.read_excel("~/Downloads/agent.xlsx")
-            for i in range(len(df)):
+            for i in range(1, len(df)):
                 agent = Agent(name=df['Name'][i], email=df['Email'][i], password=df['Password'][i], mobileNo=df['Mobile Number'][i], status=df['Status'][i])
                 db.session.add(agent)
                 db.session.commit()
