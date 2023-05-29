@@ -7,11 +7,11 @@ import datetime
 # root page
 @app.route("/")
 def index():
-    # agent = Agent(name="test", mobileNo="123", email="test@test", password="test")
-    # db.session.add(agent)
-    # customer = Customer(name="test", mobileNo="123", collection=123, closingBalance=123, agentID=10001)
-    # db.session.add(customer)
-    # db.session.commit()
+    agent = Agent(name="test", mobileNo="123", email="test@test", password="test")
+    db.session.add(agent)
+    customer = Customer(name="test", mobileNo="123", collection=123, closingBalance=123, agentID=10001)
+    db.session.add(customer)
+    db.session.commit()
     with open('report.csv', 'w') as f:
         f.write("Name,Account Number,Mobile Number,Collection,Closing Balance,Agent ID\n")
     f.close()
@@ -44,6 +44,8 @@ def dashboard(agentID, name):
             (Customer.query.filter_by(id=int(acNo)-10000).first()).closingBalance += int(collection)
             (Customer.query.filter_by(id=int(acNo)-10000).first()).collection += int(collection)
             db.session.commit()
+            # message = "Dear "+str((Customer.query.filter_by(id=int(acNo)-10000).first()).name)+",\n\nYour account has been credited with Rs."+str(collection)+"\n\nYour closing balance is Rs."+str((Customer.query.filter_by(id=int(acNo)-10000).first()).closingBalance)+"\n\nRegard"
+            # send message to customer
             with open('report.csv', 'a') as f:
                 f.write(str((Customer.query.filter_by(id=int(acNo)-10000).first()).name)+","+str(acNo)+","+str((Customer.query.filter_by(id=int(acNo)-10000).first()).mobileNo)+","+str(collection)+","+str((Customer.query.filter_by(id=int(acNo)-10000).first()).closingBalance)+","+str(agentID)+"\n")
             f.close()
@@ -85,6 +87,7 @@ def add():
             db.session.add(agent)
             db.session.commit()
             message = "Your account has been created. Your agent ID is " + str(10000+agent.id) + " and password is " + password
+            # send message to agent
             mail.send_message('User authentication', sender='vrslightmodecoders@gmail.com', recipients=[str(agent.email)], body=message)
             return render_template("add.html", success="y", warn="n")
         return render_template("add.html", success="n", warn="y")
@@ -102,6 +105,8 @@ def addCustomer(agentID):
             customer = Customer(name=name, mobileNo=mobileNo, agentID=int(agentID))
             db.session.add(customer)
             db.session.commit()
+            # message = "Your account has been created. Your account number is " + str(10000+customer.id)
+            # send message to customer
             return render_template("add_customer.html", success="y", warn="n", nameAgent=(Agent.query.filter_by(id=int(agentID)-10000).first()).name, agentID=agentID)
         return render_template("add_customer.html", success="n", warn="y", nameAgent=(Agent.query.filter_by(id=int(agentID)-10000).first()).name, agentID=agentID)
     return render_template("add_customer.html", success="n", warn="n", nameAgent=(Agent.query.filter_by(id=int(agentID)-10000).first()).name, agentID=agentID)
@@ -129,7 +134,6 @@ def search_admin():
         search = request.form['search']
         # make case insensitive
         if Agent.query.filter_by(id=int(search)-10000).first() is not None or Agent.query.filter_by(name=search).first() is not None or Agent.query.filter_by(email=search).first() is not None:
-            # agentID = 10000+(Agent.query.filter_by(name=search).first()).id
             if search.isnumeric():
                 agentID = int(search)
             elif search.isalpha():
