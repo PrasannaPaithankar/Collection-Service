@@ -3,7 +3,7 @@
 
 Code Repository for Agent Collection Web Service.
 
-Hosted on: [mahasahakar.in:8888](http://mahasahakar.in:8888)
+Hosted on: [mahasahakar.in](http://mahasahakar.in)
 
 > ### Setup<br>
 > Run the following commands in your Linux machine: <br>
