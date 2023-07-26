@@ -94,7 +94,7 @@ def add():
             # send message to agent
             webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(mobileNo)+'&text='+message, new=2, autoraise=False)
             time.sleep(1)
-            pyautogui.press('enter')
+            pyautogui.hotkey('enter')
             
             mail.send_message('User authentication', sender='vrslightmodecoders@gmail.com', recipients=[str(agent.email)], body=message)
             return render_template("add.html", success="y", warn="n")
@@ -117,7 +117,7 @@ def addCustomer(agentID):
             # send message to customer
             webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(mobileNo)+'&text='+message, new=2, autoraise=False)
             time.sleep(1)
-            pyautogui.press('enter')
+            pyautogui.hotkey('enter')
 
             return render_template("add_customer.html", success="y", warn="n", nameAgent=(Agent.query.filter_by(id=int(agentID)-10000).first()).name, agentID=agentID)
         return render_template("add_customer.html", success="n", warn="y", nameAgent=(Agent.query.filter_by(id=int(agentID)-10000).first()).name, agentID=agentID)
@@ -204,7 +204,7 @@ def admin_action():
                 # send message to agent
                 webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(agent.mobileNo)+'&text='+message, new=2, autoraise=False)
                 time.sleep(1)
-                pyautogui.press('enter')
+                pyautogui.hotkey('enter')
 
                 mail.send_message('User authentication', sender='vrslightmodecoders@gmail.com', recipients=[str(agent.email)], body=message)
             del df
@@ -220,7 +220,7 @@ def admin_action():
                 # send message to customer
                 webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(customer.mobileNo)+'&text='+message, new=2, autoraise=False)
                 time.sleep(1)
-                pyautogui.press('enter')
+                pyautogui.hotkey('enter')
 
             del df
         return render_template("admin_action.html", success="y")
