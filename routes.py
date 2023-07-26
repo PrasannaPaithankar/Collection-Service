@@ -4,6 +4,8 @@ from models import Agent, Customer, db, app, mail
 import shutil
 import datetime
 import pandas as pd
+import webbrowser
+import pyautogui
 
 # root page
 @app.route("/")
@@ -89,6 +91,9 @@ def add():
             db.session.commit()
             message = "Your account has been created. Your agent ID is " + str(10000+agent.id) + " and password is " + password
             # send message to agent
+            webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(mobileNo)+'&text='+message, new=2)
+            pyautogui.press('enter')
+            
             mail.send_message('User authentication', sender='vrslightmodecoders@gmail.com', recipients=[str(agent.email)], body=message)
             return render_template("add.html", success="y", warn="n")
         return render_template("add.html", success="n", warn="y")
@@ -106,8 +111,11 @@ def addCustomer(agentID):
             customer = Customer(name=name, mobileNo=mobileNo, agentID=int(agentID))
             db.session.add(customer)
             db.session.commit()
-            # message = "Your account has been created. Your account number is " + str(10000+customer.id)
+            message = "Your account has been created. Your account number is " + str(10000+customer.id)
             # send message to customer
+            webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(mobileNo)+'&text='+message, new=2)
+            pyautogui.press('enter')
+
             return render_template("add_customer.html", success="y", warn="n", nameAgent=(Agent.query.filter_by(id=int(agentID)-10000).first()).name, agentID=agentID)
         return render_template("add_customer.html", success="n", warn="y", nameAgent=(Agent.query.filter_by(id=int(agentID)-10000).first()).name, agentID=agentID)
     return render_template("add_customer.html", success="n", warn="n", nameAgent=(Agent.query.filter_by(id=int(agentID)-10000).first()).name, agentID=agentID)
@@ -191,6 +199,9 @@ def admin_action():
                 db.session.commit()
                 message = "Your account has been created. Your agent ID is " + str(10000+agent.id) + " and password is " + agent.password
                 # send message to agent
+                webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(agent.mobileNo)+'&text='+message, new=2)
+                pyautogui.press('enter')
+
                 mail.send_message('User authentication', sender='vrslightmodecoders@gmail.com', recipients=[str(agent.email)], body=message)
             del df
 
@@ -201,8 +212,11 @@ def admin_action():
                 customer = Customer(name=df['Name'][i], mobileNo=df['Mobile Number'][i], agentID=df['Agent ID'][i])
                 db.session.add(customer)
                 db.session.commit()
-                # message = "Your account has been created. Your account number is " + str(10000+customer.id)
+                message = "Your account has been created. Your account number is " + str(10000+customer.id)
                 # send message to customer
+                webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(customer.mobileNo)+'&text='+message, new=2)
+                pyautogui.press('enter')
+                
             del df
         return render_template("admin_action.html", success="y")
     return render_template("admin_action.html", success="n")
