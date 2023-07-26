@@ -6,6 +6,7 @@ import datetime
 import pandas as pd
 import webbrowser
 import pyautogui
+import time
 
 # root page
 @app.route("/")
@@ -92,6 +93,7 @@ def add():
             message = "Your account has been created. Your agent ID is " + str(10000+agent.id) + " and password is " + password
             # send message to agent
             webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(mobileNo)+'&text='+message, new=2)
+            time.sleep(1)
             pyautogui.press('enter')
             
             mail.send_message('User authentication', sender='vrslightmodecoders@gmail.com', recipients=[str(agent.email)], body=message)
@@ -114,6 +116,7 @@ def addCustomer(agentID):
             message = "Your account has been created. Your account number is " + str(10000+customer.id)
             # send message to customer
             webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(mobileNo)+'&text='+message, new=2)
+            time.sleep(1)
             pyautogui.press('enter')
 
             return render_template("add_customer.html", success="y", warn="n", nameAgent=(Agent.query.filter_by(id=int(agentID)-10000).first()).name, agentID=agentID)
@@ -200,6 +203,7 @@ def admin_action():
                 message = "Your account has been created. Your agent ID is " + str(10000+agent.id) + " and password is " + agent.password
                 # send message to agent
                 webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(agent.mobileNo)+'&text='+message, new=2)
+                time.sleep(1)
                 pyautogui.press('enter')
 
                 mail.send_message('User authentication', sender='vrslightmodecoders@gmail.com', recipients=[str(agent.email)], body=message)
@@ -215,8 +219,9 @@ def admin_action():
                 message = "Your account has been created. Your account number is " + str(10000+customer.id)
                 # send message to customer
                 webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(customer.mobileNo)+'&text='+message, new=2)
+                time.sleep(1)
                 pyautogui.press('enter')
-                
+
             del df
         return render_template("admin_action.html", success="y")
     return render_template("admin_action.html", success="n")
@@ -257,7 +262,8 @@ def delAgent(agentID):
     agentID=[10000+i.id for i in Agent.query.all()]
     email=[i.email for i in Agent.query.all()]
     password=[i.password for i in Agent.query.all()]
-    return render_template("admin_dashboard.html", no = Agent.query.count(), success="y", name=name,number=mobileNo, agentID=agentID, email=email, password=password)
+    status=[i.status for i in Agent.query.all()]
+    return render_template("admin_dashboard.html", no = Agent.query.count(), success="y", name=name,number=mobileNo, agentID=agentID, email=email, password=password, status=status)
 
 # block agent function
 @app.route("/blockAgent/<agentID>", methods=['GET', 'POST'])
