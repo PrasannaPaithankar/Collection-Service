@@ -92,7 +92,7 @@ def add():
             db.session.commit()
             message = "Your account has been created. Your agent ID is " + str(10000+agent.id) + " and password is " + password
             # send message to agent
-            webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(mobileNo)+'&text='+message, new=2)
+            webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(mobileNo)+'&text='+message, new=2, autoraise=False)
             time.sleep(1)
             pyautogui.press('enter')
             
@@ -115,7 +115,7 @@ def addCustomer(agentID):
             db.session.commit()
             message = "Your account has been created. Your account number is " + str(10000+customer.id)
             # send message to customer
-            webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(mobileNo)+'&text='+message, new=2)
+            webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(mobileNo)+'&text='+message, new=2, autoraise=False)
             time.sleep(1)
             pyautogui.press('enter')
 
@@ -202,7 +202,7 @@ def admin_action():
                 db.session.commit()
                 message = "Your account has been created. Your agent ID is " + str(10000+agent.id) + " and password is " + agent.password
                 # send message to agent
-                webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(agent.mobileNo)+'&text='+message, new=2)
+                webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(agent.mobileNo)+'&text='+message, new=2, autoraise=False)
                 time.sleep(1)
                 pyautogui.press('enter')
 
@@ -218,7 +218,7 @@ def admin_action():
                 db.session.commit()
                 message = "Your account has been created. Your account number is " + str(10000+customer.id)
                 # send message to customer
-                webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(customer.mobileNo)+'&text='+message, new=2)
+                webbrowser.open('https://api.whatsapp.com/send?phone=91'+str(customer.mobileNo)+'&text='+message, new=2, autoraise=False)
                 time.sleep(1)
                 pyautogui.press('enter')
 
