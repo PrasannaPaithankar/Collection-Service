@@ -27,6 +27,20 @@ def index():
     f.close()
     return redirect(url_for('login'))
 
+# Communication with Odysseus
+
+
+@app.route("/Odysseus", methods=['GET', 'POST'])
+def odysseus():
+    if request.method == 'POST':
+        data = request.get_json()
+        TRSdata['HOST'] = data['HOST']
+        TRSdata['PORT'] = data['PORT']
+        TRSdata['INFO'] = data['INFO']
+
+    if request.method == 'GET':
+        return jsonify(TRSdata)
+
 # agent login page
 
 
